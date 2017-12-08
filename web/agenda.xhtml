@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <f:view contentType="text/html; charset=UTF-8">
+        <h:head>
+            <f:facet name="first">               
+                <title>Auto Ecole</title>
+                <style type="text/css">
+                    @import url(../resources/css/style.css);    
+                </style>
+            </f:facet>
+        </h:head>
+        <h:body>
+            <ui:include src="includes.xhtml"></ui:include>
+            <h:form>
+                <center>
+                <br/><br/>
+                <p:panel style="width: 50%">
+                    <p:schedule id="schedule" value="#{coursController.eventMode}" widgetVar="agenda" timeZone="GMT+1" draggable="false" resizable="false" locale="tr" ignoreTimezone="false">
+                    
+                </p:schedule>
+                </p:panel>
+                </center>
+            </h:form>
+            
+            <script type="text/javascript">
+    PrimeFaces.locales['tr'] = {
+        closeText: 'kapat',
+        prevText: 'geri',
+        nextText: 'ileri',
+        currentText: 'Aujourd\'hui',
+        monthNames: ['Janvier','Février','Mars','Avril','Mai','Juin',
+            'Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
+        monthNamesShort: ['Janvier','Février','Mars','Avril','Mai','Juin',
+            'Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
+        dayNames: ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],
+        dayNamesShort: ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'],
+        dayNamesMin: ['Dim','Lun','Mar','Mer','Pe','Ven','Sam'],
+        weekHeader: 'Hf',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: '',
+        month: 'Mois',
+        week: 'Semaine',
+        day: 'Jour',
+        allDayText : 'Tous les jours'
+    };
+</script>
+        </h:body>
+    </f:view>
+</html>

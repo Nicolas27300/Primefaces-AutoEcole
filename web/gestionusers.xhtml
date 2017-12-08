@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <f:view contentType="text/html; charset=UTF-8">
+        <h:head>
+            <f:facet name="first">               
+                <title>Auto Ecole</title>
+                <style type="text/css">
+                    @import url(../resources/css/style.css);    
+                </style>
+            </f:facet>
+        </h:head>
+        <h:body>
+            <ui:include src="includes.xhtml"></ui:include>
+            <br/>
+            <c:if test = "#{(loginController.logged) and (loginController.moniteur)}">
+                <h:form>
+                    <p:dataTable var="user" value="#{userController.users}" editable="true" id="tableusers">
+                        <p:ajax event="rowEdit" listener="#{userController.onRowEdit}" update="tableusers" />
+                        <p:column headerText="Pseudo">
+                            <center>
+                                <h:outputText value="#{user.pseudo}" />
+                            </center>
+                        </p:column>
+                        <p:column headerText="Prénom">
+                            <center>
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{user.prenom}" /></f:facet>
+                                    <f:facet name="input"><p:inputText id="modelInputPrenom" value="#{user.prenom}" style="width:100%"/></f:facet>
+                                </p:cellEditor>
+                            </center>
+                        </p:column>
+                        <p:column headerText="Nom">
+                            <center>
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{user.nom}" /></f:facet>
+                                    <f:facet name="input"><p:inputText id="modelInputNom" value="#{user.nom}" style="width:100%"/></f:facet>
+                                </p:cellEditor>
+                            </center>
+                        </p:column>
+                        <p:column headerText="Email">
+                            <center>
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{user.email}" /></f:facet>
+                                    <f:facet name="input"><p:inputText id="modelInputEmail" value="#{user.email}" style="width:100%"/></f:facet>
+                                </p:cellEditor>
+                            </center>
+                        </p:column>
+                        <p:column headerText="Adresse">
+                            <center>
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{user.adresse}" /></f:facet>
+                                    <f:facet name="input"><p:inputText id="modelInputAdresse" value="#{user.adresse}" style="width:100%"/></f:facet>
+                                </p:cellEditor>
+                            </center>
+                        </p:column>
+                        <p:column headerText="Code Postal">
+                            <center>
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{user.cp}" /></f:facet>
+                                    <f:facet name="input"><p:inputText id="modelInputCP" value="#{user.cp}" style="width:100%"/></f:facet>
+                                </p:cellEditor>
+                            </center>
+                        </p:column>
+                        <p:column headerText="Ville">
+                            <center>
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{user.ville}" /></f:facet>
+                                    <f:facet name="input"><p:inputText id="modelInputVille" value="#{user.ville}" style="width:100%"/></f:facet>
+                                </p:cellEditor>
+                            </center>
+                        </p:column>
+                        <p:column headerText="Moniteur">
+                            <center>
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{user.moniteur}" /></f:facet>
+                                    <f:facet name="input"><p:inputText id="modelInputMoniteur" value="#{user.moniteur}" style="width:100%"/></f:facet>
+                                </p:cellEditor>
+                            </center>
+                        </p:column>
+                        <p:column style="width:32px">
+                            <center>
+                            <p:rowEditor />
+                            </center>
+                        </p:column>
+                        <p:column headerText="Suppresion">
+                            <center>
+                                <p:commandButton value="Supprimer" icon="ui-icon-closethick" actionListener="#{userController.removeUser}">
+                                    <f:attribute value="#{user}" name="user" />
+                                </p:commandButton>
+                            </center>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </c:if>
+            <c:if test = "#{(!loginController.logged) or (!loginController.moniteur)}">
+                Accès Interdit.
+            </c:if>
+        </h:body>
+    </f:view>
+</html>

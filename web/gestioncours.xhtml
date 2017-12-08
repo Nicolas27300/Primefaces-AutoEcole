@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <f:view contentType="text/html; charset=UTF-8">
+        <h:head>
+            <f:facet name="first">               
+                <title>Auto Ecole</title>
+                <style type="text/css">
+                    @import url(../resources/css/style.css);    
+                </style>
+            </f:facet>
+        </h:head>
+        <h:body>
+            <ui:include src="includes.xhtml"></ui:include>
+            <br/>
+            <c:if test = "#{(loginController.logged) and (loginController.moniteur)}">
+                <h:form>
+                    <p:dataTable var="cours" value="#{coursController.nonvalide}" id="tablecours">
+                        <p:column headerText="Eleve">
+                            <center>
+                                <h:outputText value="#{cours.eleve.prenom}  #{cours.eleve.nom}" />
+                            </center>
+                        </p:column>
+                        <p:column headerText="Moniteur">
+                            <center>
+                                <h:outputText value="#{cours.prof.prenom}  #{cours.prof.nom}" />
+                            </center>
+                        </p:column>
+                        <p:column headerText="Voiture">
+                            <center>
+                                <h:outputText value="#{cours.voiture.imatriculation} (#{cours.voiture.modele})"  />
+                            </center>
+                        </p:column>
+                        <p:column headerText="Heure début">
+                            <center>
+                                <h:outputText value="#{cours.heureDebut}" />
+                            </center>
+                        </p:column>
+                        <p:column headerText="Voiture">
+                            <center>
+                                <h:outputText value="#{cours.heureFin}" />
+                            </center>
+                        </p:column>
+                        <p:column headerText="Administration">
+                            <center>
+                                <p:commandButton value="Accepter" icon="ui-icon-check" actionListener="#{coursController.accepterCours}">
+                                    <f:attribute value="#{cours}" name="cours" />
+                                </p:commandButton>
+                                <p:commandButton value="Refuser" icon="ui-icon-closethick" actionListener="#{coursController.refuserCours}" update="tablecours">
+                                    <f:attribute value="#{cours}" name="cours" />
+                                </p:commandButton>
+                            </center>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+                
+                <br/><br/>
+                <center>
+                <p:panel style="width: 50%">
+                    <p:schedule id="schedule" value="#{coursController.eventModeProf}" widgetVar="agenda" timeZone="GMT+1" draggable="false" resizable="false" locale="tr" ignoreTimezone="false">
+                    
+                </p:schedule>
+                </p:panel>
+                </center>
+            </c:if>
+            <c:if test = "#{(!loginController.logged) or (!loginController.moniteur)}">
+                Accès Interdit.
+            </c:if>
+            
+            <script type="text/javascript">
+    PrimeFaces.locales['tr'] = {
+        closeText: 'kapat',
+        prevText: 'geri',
+        nextText: 'ileri',
+        currentText: 'Aujourd\'hui',
+        monthNames: ['Janvier','Février','Mars','Avril','Mai','Juin',
+            'Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
+        monthNamesShort: ['Janvier','Février','Mars','Avril','Mai','Juin',
+            'Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
+        dayNames: ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],
+        dayNamesShort: ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'],
+        dayNamesMin: ['Dim','Lun','Mar','Mer','Pe','Ven','Sam'],
+        weekHeader: 'Hf',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: '',
+        month: 'Mois',
+        week: 'Semaine',
+        day: 'Jour',
+        allDayText : 'Tous les jours'
+    };
+</script>
+        </h:body>
+    </f:view>
+</html>

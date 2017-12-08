@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <f:view contentType="text/html; charset=UTF-8">
+        <h:head>
+            <f:facet name="first">               
+                <title>Auto Ecole</title>
+                <style type="text/css">
+                    @import url(../resources/css/style.css);    
+                </style>
+            </f:facet>
+        </h:head>
+        <h:body>
+            <ui:include src="includes.xhtml"></ui:include>
+            <br/>
+            <c:if test = "#{(loginController.logged)}">
+                Attention : Chaque cours dure obligatoirement une heure, la date de fin du cours sera toujours donc une heure après la date de début.
+                <h:form>
+                    <p:growl id="message" showDetail="true"/>
+                    <h:panelGrid columns="2" cellpadding="3" id="grid">
+                        <p:outputLabel for="datetime" value="Début du cours : " />
+                        <p:calendar id="datetime" value="#{coursController.debutCours}" pattern="MM/dd/yyyy HH:mm" />
+                        <p:outputLabel for="moniteur" value="Moniteur : " />
+                        <p:selectOneMenu id="moniteur" value="#{coursController.moniteur}" style="width:150px">
+                            <f:selectItem itemLabel="Ton moniteur ?" itemValue="" noSelectionOption="true" />
+                            <f:selectItems value="#{userController.moniteurs}" />
+                        </p:selectOneMenu>
+                        <p:commandButton value="Faire la demande" actionListener="#{coursController.demandeCours}" update="message grid" />
+                    </h:panelGrid>
+                </h:form>
+            </c:if>
+
+            <c:if test = "#{(!loginController.logged)}">
+                Accès Interdit.
+            </c:if>
+        </h:body>
+    </f:view>
+</html>

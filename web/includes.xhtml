@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:form>
+        <c:if test = "#{loginController.logged}">
+            <p:menubar>
+                <p:menuitem url="http://localhost:8084/AutoEcole/">Accueil</p:menuitem>
+                <p:submenu label="Cours">
+                    <p:menuitem url="http://localhost:8084/AutoEcole/faces/addcours.xhtml">Prendre un cours</p:menuitem>
+                    <p:menuitem url="http://localhost:8084/AutoEcole/faces/agenda.xhtml">Places disponibles</p:menuitem>
+                </p:submenu>
+                <c:if test = "#{loginController.moniteur}">
+                    <p:submenu label="Administration">
+                        <p:menuitem url="http://localhost:8084/AutoEcole/faces/gestioncours.xhtml">Gestion Cours</p:menuitem>
+                        <p:menuitem url="http://localhost:8084/AutoEcole/faces/gestionvoitures.xhtml">Gestion Voiture</p:menuitem>
+                        <p:menuitem url="http://localhost:8084/AutoEcole/faces/gestionusers.xhtml">Gestion Utilisateurs</p:menuitem>
+                    </p:submenu>
+                </c:if>
+                <p:submenu label="Bonjour #{loginController.pseudo}" style="float:right">
+                    <p:menuitem url="http://localhost:8084/AutoEcole/faces/profil.xhtml">Profil</p:menuitem>
+                    <p:menuitem actionListener="#{loginController.deconnexion(event)}">Deconnexion</p:menuitem>
+                </p:submenu>
+            </p:menubar>
+        </c:if>
+        <c:if test = "#{!loginController.logged}">
+            <p:menubar>
+                <p:menuitem url="http://localhost:8084/AutoEcole/">Acceuil</p:menuitem>
+                <p:submenu label="Espace Membre" style="float:right">
+                    <p:menuitem url="http://localhost:8084/AutoEcole/faces/inscription.xhtml">Inscription</p:menuitem>
+                    <p:menuitem url="http://localhost:8084/AutoEcole/faces/connexion.xhtml">Connexion</p:menuitem>
+                </p:submenu>
+            </p:menubar>
+        </c:if>
+
+    </h:form>
+</ui:composition>
+
